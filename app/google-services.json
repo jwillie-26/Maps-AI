@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "556266205922",
+    "project_id": "maps-ai-app-4e675",
+    "storage_bucket": "maps-ai-app-4e675.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556266205922:android:ab24221e86e63d88e3a4bb",
+        "android_client_info": {
+          "package_name": "com.example.mapsai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtHSHSw3ajOPlmsa1UJE1adyxfA2DYCSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
