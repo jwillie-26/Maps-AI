@@ -1,7 +1,7 @@
 package com.example.mapsai.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.yourapp.mapsai.data.model.Place
+import com.example.mapsai.data.model.Place
 import kotlinx.coroutines.tasks.await
 
 class PlacesRepository(
@@ -18,13 +18,12 @@ class PlacesRepository(
             .get()
             .await()
 
-        return snapshot.toObjects(Place::class.java)
+        return snapshot.documents.mapNotNull { it.toObject(Place::class.java) }
     }
 
     // Get all places
     suspend fun getAllPlaces(): List<Place> {
         val snapshot = placesCollection.get().await()
-        return snapshot.toObjects(Place::class.java)
+        return snapshot.documents.mapNotNull { it.toObject(Place::class.java) }
     }
 }
-

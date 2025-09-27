@@ -1,65 +1,31 @@
 package com.example.mapsai.data.repository
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.yourapp.mapsai.data.model.Preference
-import com.yourapp.mapsai.data.model.Place
-import kotlinx.coroutines.tasks.await
+import com.example.mapsai.data.model.Place
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+class UserRepository {
 
-val auth: FirebaseAuth = FirebaseAuth.getInstance()
-val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    // Simulated user preferences (in real case, fetch from Firestore or SharedPreferences)
+    private val userPreferences = listOf("restaurant", "park", "museum")
 
-class UserRepository(
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-) {
-    private val usersCollection = db.collection("users")
+    // Simulated favorites list (replace with Firestore/Room in real app)
+    private val favorites = mutableListOf<Place>()
 
-    fun getCurrentUserId(): String? = auth.currentUser?.uid
-
-    // Save preferences to Firestore
-    suspend fun savePreferences(preferences: List<Preference>) {
-        val uid = getCurrentUserId() ?: return
-        usersCollection.document(uid)
-            .collection("preferences")
-            .document("userPrefs")
-            .set(mapOf("prefs" to preferences.map { it.name }))
-            .await()
+    // Get user preferences (categories of interest)
+    suspend fun getPreferences(): List<String> = withContext(Dispatchers.IO) {
+        // TODO: Replace with Firestore/SharedPreferences logic
+        userPreferences
     }
 
-    // Get preferences
-    suspend fun getPreferences(): List<String> {
-        val uid = getCurrentUserId() ?: return emptyList()
-        val snapshot = usersCollection.document(uid)
-            .collection("preferences")
-            .document("userPrefs")
-            .get()
-            .await()
-
-        return snapshot.get("prefs") as? List<String> ?: emptyList()
+    // Save a favorite place for the user
+    suspend fun saveFavorite(place: Place) = withContext(Dispatchers.IO) {
+        // TODO: Replace with Firestore/Room database logic
+        favorites.add(place)
     }
 
-    // Save a favorite place
-    suspend fun saveFavorite(place: Place) {
-        val uid = getCurrentUserId() ?: return
-        usersCollection.document(uid)
-            .collection("favorites")
-            .document(place.id)
-            .set(place)
-            .await()
-    }
-
-    // Get all favorites
-    suspend fun getFavorites(): List<Place> {
-        val uid = getCurrentUserId() ?: return emptyList()
-        val snapshot = usersCollection.document(uid)
-            .collection("favorites")
-            .get()
-            .await()
-
-        return snapshot.toObjects(Place::class.java)
+    // Optional: Get all saved favorites
+    suspend fun getFavorites(): List<Place> = withContext(Dispatchers.IO) {
+        favorites.toList()
     }
 }

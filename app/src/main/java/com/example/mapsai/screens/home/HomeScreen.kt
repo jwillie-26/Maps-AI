@@ -1,32 +1,33 @@
 package com.example.mapsai.screens.home
 
-@Composable
-fun HomeScreen(
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
-    places: List<Place>,
-    onPlaceClick: (Place) -> Unit
-) {
-    Column {
+@Composable
+fun HomeScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
-            "Recommended for You",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(16.dp)
+            text = "Welcome to Home Screen 🎉",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(bottom = 24.dp)
         )
 
-        LazyColumn {
-            items(places) { place ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .clickable { onPlaceClick(place) }
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(place.name, style = MaterialTheme.typography.titleMedium)
-                        Text(place.description, style = MaterialTheme.typography.bodyMedium)
-                    }
-                }
-            }
+        Button(onClick = {
+            // Later you can add actions here
+        }) {
+            Text("Do Something")
         }
     }
 }
