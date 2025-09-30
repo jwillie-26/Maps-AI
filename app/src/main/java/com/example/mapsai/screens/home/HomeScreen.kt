@@ -1,33 +1,38 @@
 package com.example.mapsai.screens.home
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.* // <-- for Column, Spacer, padding, etc.
+import androidx.compose.material3.* // <-- for Button, Text, Material3 components
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.compose.ui.Modifier // <-- FIX for Modifier
+import androidx.compose.ui.unit.dp // <-- FIX for dp values
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "Welcome to Home Screen 🎉",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
+        Button(
+            onClick = { navController.navigate("profile") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Go to Profile Screen")
+        }
 
-        Button(onClick = {
-            // Later you can add actions here
-        }) {
-            Text("Do Something")
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+                navController.navigate(
+                    "placeDetail/SamplePlace/This is a test description"
+                )
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Go to Place Detail Screen")
         }
     }
 }
