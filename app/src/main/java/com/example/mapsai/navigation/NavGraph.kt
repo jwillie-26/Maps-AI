@@ -11,6 +11,8 @@ import com.example.mapsai.screens.preference.PreferencesScreen
 import com.example.mapsai.screens.home.HomeScreen
 import com.example.mapsai.screens.profile.ProfileScreen
 import com.example.mapsai.screens.detail.PlaceDetailScreen
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -18,29 +20,22 @@ fun NavGraph(navController: NavHostController) {
         navController = navController,
         startDestination = "preferences"
     ) {
-        // Preferences screen
+        // Preferences screen expects NavController
         composable("preferences") {
             PreferencesScreen(navController = navController)
         }
 
-        // Home screen
+        // Home screen expects NavController
         composable("home") {
             HomeScreen(navController = navController)
         }
 
-        // Profile screen
+        // Profile screen expects NavController (it will read Firestore / auth itself)
         composable("profile") {
-            val userName = "Demo User"
-            val prefs = listOf("Restaurants", "Parks") // Example hardcoded prefs
-
-            ProfileScreen(
-                userName = userName,
-                preferences = prefs,
-                onLogout = { navController.navigate("preferences") }
-            )
+            ProfileScreen(navController = navController)
         }
 
-        // Place Detail screen with arguments
+        // Place Detail screen with arguments (we decode them to handle spaces)
         composable(
             route = "placeDetail/{placeName}/{placeDesc}",
             arguments = listOf(
@@ -48,8 +43,10 @@ fun NavGraph(navController: NavHostController) {
                 navArgument("placeDesc") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            val name = backStackEntry.arguments?.getString("placeName") ?: ""
-            val desc = backStackEntry.arguments?.getString("placeDesc") ?: ""
+            val rawName = backStackEntry.arguments?.getString("placeName") ?: ""
+            val rawDesc = backStackEntry.arguments?.getString("placeDesc") ?: ""
+            val name = URLDecoder.decode(rawName, StandardCharsets.UTF_8.name())
+            val desc = URLDecoder.decode(rawDesc, StandardCharsets.UTF_8.name())
 
             val place = Place(
                 id = "1",
