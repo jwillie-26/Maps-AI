@@ -61,7 +61,7 @@ dependencies {
     // Coroutines support for Firebase
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
-    // AndroidX + Jetpack Compose
+    // AndroidX + Jetpack Compose test
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -78,11 +78,11 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
-    // Debugging
+    // Debugging test
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    //Navigation
+    //Navigation test
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.compose.material3:material3:1.2.0")
 
